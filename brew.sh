@@ -6,7 +6,7 @@ if [[ $(command -v brew) == "" ]]; then
 else
   echo "Updating Homebrew.. "
   brew update
-fi
+fi;
 
 # Install command-line tools using Homebrew
 brew upgrade
@@ -18,5 +18,12 @@ brew install heroku
 brew install unrar
 brew install gnupg
 brew install wget
+
+# Install binaries using Homebrew cask
+brew cask install visual-studio-code
+brew cask install spotify
+brew cask install google-chrome
+brew cask install firefox
+brew cask install hyper
 
 brew cleanup
