@@ -1,29 +1,50 @@
 #!/usr/bin/env bash
 
-if [[ $(command -v brew) == "" ]]; then 
+if [[ $(command -v brew) == "" ]]; then
   echo "Installing Homebrew.. "
   ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 else
   echo "Updating Homebrew.. "
   brew update
+  brew upgrade
 fi;
 
 # Install command-line tools using Homebrew
-brew upgrade
+declare -a clis=(
+  'git'
+  'node'
+  'yarn'
+  'heroku'
+  'unrar'
+  'gnupg'
+  'wget'
+);
 
-brew install git
-brew install node
-brew install yarn
-brew install heroku
-brew install unrar
-brew install gnupg
-brew install wget
+for cli in "${clis[@]}"; do
+  if ! brew ls --versions $cli > /dev/null; then
+    brew install $cli
+  fi;
+done;
+unset cli;
 
 # Install binaries using Homebrew cask
-brew cask install visual-studio-code
-brew cask install spotify
-brew cask install google-chrome
-brew cask install firefox
-brew cask install hyper
+declare -a binaries=(
+  'visual-studio-code'
+  'spotify'
+  'google-chrome'
+  'firefox'
+  'hyper'
+);
 
+for binary in "${binaries[@]}"; do
+  if ! brew cask ls --versions ${binary} &> /dev/null; then
+    brew cask install $binary
+  fi;
+
+  if [ $binary == "visual-studio-code" ]; then
+    source ${PWD}/vscode.sh;
+  fi;
+done;
+
+# Cleanup
 brew cleanup
