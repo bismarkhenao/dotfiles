@@ -35,6 +35,7 @@ declare -a binaries=(
   'firefox'
   'hyper'
   'slack'
+  'docker'
 );
 
 for binary in "${binaries[@]}"; do
