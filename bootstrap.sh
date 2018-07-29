@@ -4,10 +4,25 @@ cd "$(dirname "${BASH_SOURCE}")";
 
 git pull origin master;
 
+read -p "Do you want to run brew.sh? (y/n)" -n 1;
+echo "";
+
+# Installing brew packages
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+  source brew.sh;
+fi;
+
+# Installing .oh-my-zsh
 if [ ! -d "${HOME}/.oh-my-zsh" ]; then
-  echo -e "Installing oh-my-zsh\n";
+  echo -e "Installing oh-my-zsh";
+  echo "";
   git clone https://github.com/robbyrussell/oh-my-zsh.git ${HOME}/.oh-my-zsh
 fi;
+
+# Installing nvm
+echo -e "Installing nvm";
+echo "";
+wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
 
 function sync() {
   rsync --exclude ".git/" \
